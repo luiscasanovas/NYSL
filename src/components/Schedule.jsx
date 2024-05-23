@@ -1,17 +1,8 @@
 import React from 'react';
+import data from '../gamesData.json';
 
 const Schedule = () => {
-  const games = [
-    { date: "2024-09-01", time: "09:30", teams: ["U1", "U4"], location: "katzenmaier" },
-    { date: "2024-09-01", time: "13:00", teams: ["U3", "U2"], location: "greenbay" },
-    { date: "2024-09-08", time: "09:30", teams: ["U5", "U6"], location: "howard_yeager" },
-    { date: "2024-09-08", time: "13:00", teams: ["U6", "U1"], location: "marjorie_hart" },
-    { date: "2024-09-15", time: "09:30", teams: ["U2", "U4"], location: "north" },
-    { date: "2024-09-15", time: "13:00", teams: ["U3", "U5"], location: "katzenmaier" },
-    { date: "2024-09-22", time: "09:30", teams: ["U1", "U3"], location: "south" },
-    { date: "2024-09-22", time: "13:00", teams: ["U2", "U6"], location: "howard_yeager" },
-    { date: "2024-09-29", time: "09:30", teams: ["U4", "U5"], location: "greenbay" },
-  ];
+  const { games, locations } = data;
 
   return (
     <div className="container">
@@ -26,14 +17,21 @@ const Schedule = () => {
           </tr>
         </thead>
         <tbody>
-          {games.map((game, index) => (
-            <tr key={index}>
-              <td>{game.date}</td>
-              <td>{game.time}</td>
-              <td>{game.teams.join(" vs ")}</td>
-              <td>{game.location}</td>
-            </tr>
-          ))}
+          {games.map((game, index) => {
+            const locationDetails = locations[game.location];
+            return (
+              <tr key={index}>
+                <td>{game.date}</td>
+                <td>{game.time}</td>
+                <td>{game.teams.join(" vs ")}</td>
+                <td>
+                  {locationDetails.name}<br />
+                  <small>{locationDetails.address}</small><br />
+                  <a href={locationDetails.map_url} target="_blank" rel="noopener noreferrer">Map</a>
+                </td>
+              </tr>
+            );
+          })}
         </tbody>
       </table>
     </div>
