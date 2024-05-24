@@ -1,13 +1,14 @@
 import React from 'react';
+import { Table, Container } from 'react-bootstrap';
 import data from '../gamesData.json';
 
 const Schedule = () => {
   const { games, locations } = data;
 
   return (
-    <div className="container">
+    <Container>
       <h2>Schedule</h2>
-      <table className="table table-striped">
+      <Table striped bordered hover>
         <thead>
           <tr>
             <th>Date</th>
@@ -17,24 +18,25 @@ const Schedule = () => {
           </tr>
         </thead>
         <tbody>
-          {games.map((game, index) => {
+          {Object.keys(games).map((gameKey) => {
+            const game = games[gameKey];
             const locationDetails = locations[game.location];
             return (
-              <tr key={index}>
+              <tr key={gameKey}>
                 <td>{game.date}</td>
                 <td>{game.time}</td>
                 <td>{game.teams.join(" vs ")}</td>
                 <td>
-                  {locationDetails.name}<br />
+                  {locationDetails.full_name}<br />
                   <small>{locationDetails.address}</small><br />
-                  <a href={locationDetails.map_url} target="_blank" rel="noopener noreferrer">Map</a>
+                  <a href={locationDetails.google_map_url} target="_blank" rel="noopener noreferrer">Map</a>
                 </td>
               </tr>
             );
           })}
         </tbody>
-      </table>
-    </div>
+      </Table>
+    </Container>
   );
 };
 
