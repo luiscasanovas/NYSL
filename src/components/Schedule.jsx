@@ -29,7 +29,7 @@ const Schedule = () => {
                 <td>
                   {locationDetails.full_name}<br />
                   <small>{locationDetails.address}</small><br />
-                  <a href={locationDetails.google_map_url} target="_blank" rel="noopener noreferrer">Map</a>
+                  <a href={locationDetails.map_url} target="_blank" rel="noopener noreferrer">Map</a>
                 </td>
               </tr>
             );
