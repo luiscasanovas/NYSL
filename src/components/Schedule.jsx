@@ -1,55 +1,63 @@
-import React, { useEffect, useState } from 'react';
-import { Container, Row, Col, ListGroup, InputGroup, FormControl, Button, Navbar, Nav } from 'react-bootstrap';
+import React, { useState, useEffect } from 'react';
+import { Container, Row, Col, Table, ListGroup, Form, InputGroup, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import data from '../gamesData.json';
-import '../App.css';
 
 const Schedule = () => {
-  const [games, setGames] = useState({});
-  const [locations, setLocations] = useState({});
+    const [games, setGames] = useState({});
+    const [searchTerm, setSearchTerm] = useState('');
 
-  useEffect(() => {
-    // Simulate fetching data
-    setGames(data.games);
-    setLocations(data.locations);
-  }, []);
+    useEffect(() => {
+        setGames(data.games);
+    }, []);
 
-  return (
-    <Container>
-      <h2>Schedule</h2>
-      <Table striped bordered hover className="table">
-        <thead>
-          <tr>
-            <th>Date</th>
-            <th>Time</th>
-            <th>Teams</th>
-            <th>Location</th>
-          </tr>
-        </thead>
-        <tbody>
-          {Object.keys(games).map((gameKey) => {
-            const game = games[gameKey];
-            const locationDetails = locations[game.location];
-            return (
-              <tr key={gameKey}>
-                <td>{game.date}</td>
-                <td>{game.time}</td>
-                <td>
-                  <Link to={`/game/${gameKey}`}>
-                    {game.teams.join(" vs ")}
-                  </Link>
-                </td>
-                <td>
-                  {locationDetails.full_name}<br />
-                  <small>{locationDetails.address}</small><br />
-                </td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </Table>
-    </Container>
-  );
+    const handleSearchChange = (event) => {
+        setSearchTerm(event.target.value);
+    };
+
+    const filteredGames = Object.keys(games).filter((gameKey) => {
+        const game = games[gameKey];
+        return game.teams.join(' vs ').toLowerCase().includes(searchTerm.toLowerCase()) ||
+               data.locations[game.location].name.toLowerCase().includes(searchTerm.toLowerCase());
+    });
+
+    return (
+        <Container fluid>
+            <Row className="mb-4">
+                <Col>
+                    <InputGroup className="mb-3">
+                        <Form.Control
+                            placeholder="Search games by teams or location"
+                            onChange={handleSearchChange}
+                            value={searchTerm}
+                        />
+                        <Button variant="outline-secondary" id="button-addon2">
+                            Search
+                        </Button>
+                    </InputGroup>
+                </Col>
+            </Row>
+            <Row>
+                <Col>
+                    <ListGroup>
+                        {filteredGames.map((gameKey) => {
+                            const game = games[gameKey];
+                            const locationDetails = data.locations[game.location];
+                            return (
+                                <ListGroup.Item action as={Link} to={`/game/${gameKey}`} key={gameKey}>
+                                    <div className="d-flex w-100 justify-content-between">
+                                        <h5 className="mb-1">{game.teams.join(" vs ")}</h5>
+                                        <small>{locationDetails.name}</small>
+                                    </div>
+                                    <small>Date: {game.date} - Time: {game.time}</small>
+                                </ListGroup.Item>
+                            );
+                        })}
+                    </ListGroup>
+                </Col>
+            </Row>
+        </Container>
+    );
 };
 
 export default Schedule;

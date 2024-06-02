@@ -67,3 +67,21 @@
   height: 100%;
   border: none;
 }
+
+.mx-auto {
+  display: flex;
+  flex-direction: row; 
+  align-items: center; 
+  justify-content: center; 
+}
+
+.nav-link {
+  padding: 0.5rem 1rem; 
+  color: #495057 !important;
+  text-decoration: none !important;
+}
+
+.nav-link:hover, .nav-link:focus {
+  color: #5a6268 !important;
+  text-decoration: none !important;
+}
