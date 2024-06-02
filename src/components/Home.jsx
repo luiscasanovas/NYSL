@@ -1,5 +1,6 @@
 import React from 'react';
 import { Container, Row, Col, Table } from 'react-bootstrap';
+import '../App.css'; 
 
 const Home = () => {
   return (
@@ -7,7 +8,7 @@ const Home = () => {
       <Row>
         <Col>
           <h2>Upcoming Events</h2>
-          <Table striped bordered>
+          <Table striped bordered className="table">
             <thead>
               <tr>
                 <th>Date</th>

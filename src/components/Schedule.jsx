@@ -1,14 +1,23 @@
-import React from 'react';
-import { Table, Container } from 'react-bootstrap';
+import React, { useEffect, useState } from 'react';
+import { Container, Row, Col, ListGroup, InputGroup, FormControl, Button, Navbar, Nav } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 import data from '../gamesData.json';
+import '../App.css';
 
 const Schedule = () => {
-  const { games, locations } = data;
+  const [games, setGames] = useState({});
+  const [locations, setLocations] = useState({});
+
+  useEffect(() => {
+    // Simulate fetching data
+    setGames(data.games);
+    setLocations(data.locations);
+  }, []);
 
   return (
     <Container>
       <h2>Schedule</h2>
-      <Table striped bordered hover>
+      <Table striped bordered hover className="table">
         <thead>
           <tr>
             <th>Date</th>
@@ -25,11 +34,14 @@ const Schedule = () => {
               <tr key={gameKey}>
                 <td>{game.date}</td>
                 <td>{game.time}</td>
-                <td>{game.teams.join(" vs ")}</td>
+                <td>
+                  <Link to={`/game/${gameKey}`}>
+                    {game.teams.join(" vs ")}
+                  </Link>
+                </td>
                 <td>
                   {locationDetails.full_name}<br />
                   <small>{locationDetails.address}</small><br />
-                  <a href={locationDetails.map_url} target="_blank" rel="noopener noreferrer">Map</a>
                 </td>
               </tr>
             );
