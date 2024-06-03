@@ -27,6 +27,15 @@
 .App-link {
   color: #61dafb;
 }
+
+h2 {
+  margin-top: 20px; 
+  color: #333; 
+}
+
+.ListGroup {
+  margin-bottom: 20px; 
+}
 .table td, .table th {
   white-space: nowrap; 
   overflow: hidden; 
@@ -84,4 +93,17 @@
 .nav-link:hover, .nav-link:focus {
   color: #5a6268 !important;
   text-decoration: none !important;
+}
+.btn-custom {
+    background-color: #f8f9fa;  
+    color: black;             
+    border-radius: 0.25rem;    
+    border: 1px solid #dee2e6; 
+    transition: background-color 0.3s ease; 
+}
+
+.btn-custom:hover, .btn-custom:focus {
+    background-color: #e2e6ea; 
+    outline: none;            
+    box-shadow: none;         
 }

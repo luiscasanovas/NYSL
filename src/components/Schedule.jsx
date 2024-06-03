@@ -25,6 +25,7 @@ const Schedule = () => {
         <Container fluid>
             <Row className="mb-4">
                 <Col>
+                    <h2>Schedule</h2> 
                     <InputGroup className="mb-3">
                         <Form.Control
                             placeholder="Search games by teams or location"

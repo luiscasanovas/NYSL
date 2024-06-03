@@ -1,24 +1,36 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import { Navbar, Nav, Container } from 'react-bootstrap';
+import { Navbar, Nav, Container, Button } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import '../App.css'; 
-import logo from '../nysl_logo.png';  
+import '../App.css';
+import logo from '../nysl_logo.png';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { auth, signInWithGoogle, signOutUser } from '../firebase';
+
 const Navigation = () => {
+  const [user, loading, error] = useAuthState(auth);
+
   return (
     <Navbar bg="light" expand="lg">
       <Container fluid>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        
+
         <Nav className="mx-auto">
-          <NavLink to="/signin" className="nav-link">Sign In</NavLink>
-          <NavLink to="/login" className="nav-link">Log In</NavLink>
+          {user ? (
+            <Button className="btn-custom nav-link" onClick={signOutUser}>
+              Sign Out
+            </Button>
+          ) : (
+            <Button className="btn-custom nav-link" onClick={signInWithGoogle}>
+              Sign In with Google
+            </Button>
+          )}
         </Nav>
 
         <Navbar.Brand className="ms-auto" as={NavLink} to="/">
           <img
             src={logo}
-            height="50"  
+            height="50"
             className="d-inline-block align-top"
             alt="NYSL Logo"
           />
