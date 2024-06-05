@@ -58,15 +58,15 @@ const MessageBoard = () => {
                 <div className="d-flex justify-content-between">
                     <Button variant="primary" onClick={() => {
                         if (!user) {
-                            alert("Please log in to send messages."); // Ensures user is logged in before sending message
+                            alert("Please log in to send messages."); 
                             return;
                         }
                         if (!newMessage.trim()) {
                             alert("Please enter a message before sending.");
                             return;
                         }
-                        console.log("Send message:", newMessage); // Placeholder for message send logic
-                        setNewMessage(''); // Reset input field after sending a message
+                        console.log("Send message:", newMessage); 
+                        setNewMessage(''); 
                     }}>
                         Send
                     </Button>
