@@ -20,6 +20,20 @@ const MessageBoard = () => {
         }
     }, [id]);
 
+    if (loading) {
+        return <Container>Loading...</Container>;
+    }
+
+    if (!user) {
+        return (
+            <Container>
+                <Alert variant="info">
+                    Please <strong>Sign in</strong> to view and participate in the message board.
+                </Alert>
+            </Container>
+        );
+    }
+
     return (
         <Container>
             <h2>{gamesData.games[id].teams.join(' vs ')}</h2>
@@ -43,12 +57,16 @@ const MessageBoard = () => {
                 </Form.Group>
                 <div className="d-flex justify-content-between">
                     <Button variant="primary" onClick={() => {
+                        if (!user) {
+                            alert("Please log in to send messages."); // Ensures user is logged in before sending message
+                            return;
+                        }
                         if (!newMessage.trim()) {
                             alert("Please enter a message before sending.");
                             return;
                         }
-                        console.log("Send message:", newMessage); 
-                        setNewMessage(''); 
+                        console.log("Send message:", newMessage); // Placeholder for message send logic
+                        setNewMessage(''); // Reset input field after sending a message
                     }}>
                         Send
                     </Button>
