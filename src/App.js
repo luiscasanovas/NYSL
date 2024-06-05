@@ -5,6 +5,9 @@ import Home from './components/Home';
 import Schedule from './components/Schedule';
 import GameDetail from './components/GameDetail';
 import Navigation from './components/Navigation';
+import MessageBoard from './components/MessageBoard'; 
+
+
 
 function App() {
   return (
@@ -15,6 +18,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/games" element={<Schedule />} />
           <Route path="/game/:id" element={<GameDetail />} />
+          <Route path="/game/:id/messages" element={<MessageBoard />} /> 
         </Routes>
       </div>
     </Router>

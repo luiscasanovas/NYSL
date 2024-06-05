@@ -16,7 +16,7 @@ const GameDetail = () => {
           <p><strong>Date:</strong> {game.date}</p>
           <p><strong>Time:</strong> {game.time}</p>
           <p><strong>Teams:</strong> {game.teams.join(' vs ')}</p>
-          <p><strong>Location:</strong> {location.full_name}</p>
+          <p><strong>Location:</strong> {location.name}</p>
           <p><strong>Address:</strong> {location.address}</p>
           <div className="embed-responsive embed-responsive-16by9">
             <iframe
@@ -26,7 +26,11 @@ const GameDetail = () => {
               loading="lazy"
             ></iframe>
           </div>
-          <Link to="/games">Back to Schedule</Link>
+           <Link to="/games">Back to Schedule</Link>
+          <br/>
+          <Link to={`/game/${id}/messages`} className="btn btn-primary mt-3">
+            Participate
+          </Link>
         </Col>
       </Row>
     </Container>
