@@ -7,9 +7,7 @@ import GameDetail from './components/GameDetail';
 import Navigation from './components/Navigation';
 import MessageBoard from './components/MessageBoard'; 
 
-
-
-function App() {
+const App = () => {
   return (
     <Router>
       <div>

@@ -1,26 +1,65 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { Container, Form, Button, ListGroup, Alert } from 'react-bootstrap';
-import messagesData from '../messagesData.json'; 
-import gamesData from '../gamesData.json'; 
 import { useAuthState } from 'react-firebase-hooks/auth';
-import { auth } from '../firebase';
+import { useList } from 'react-firebase-hooks/database';
+import { auth, database, ref, push, set } from '../firebase';
+import gamesData from '../gamesData.json';
+import '../App.css'; 
 
 const MessageBoard = () => {
     const { id } = useParams();
-    const [user, loading, error] = useAuthState(auth);
-    const [messages, setMessages] = useState([]);
+    const [user, loading] = useAuthState(auth);
     const [newMessage, setNewMessage] = useState('');
+    const messagesRef = ref(database, `messages/${id}`);
+    const [messagesSnapshot, loadingMessages, errorMessages] = useList(messagesRef);
+
+    const messages =
+        messagesSnapshot ? 
+            messagesSnapshot
+                .map(snapshot => ({
+                    id: snapshot.key,
+                    ...snapshot.val()
+                }))
+                .sort((a, b) => a.timestamp - b.timestamp)
+                .filter((message, index, self) => 
+                    index === self.findIndex((msg) => msg.id === message.id)
+                ) : [];
+
+    const handleSendMessage = useCallback(async () => {
+        if (!user) {
+            alert("Please Sign in to send messages.");
+            return;
+        }
+        if (newMessage.trim() === '') return;
+
+        const messageToSend = newMessage;
+        setNewMessage(''); 
+
+        try {
+            const newMessageRef = push(messagesRef);
+            await set(newMessageRef, {
+                author: user.email,
+                text: messageToSend,
+                timestamp: Date.now()
+            });
+        } catch (error) {
+            console.error("Error sending message: ", error);
+        }
+    }, [user, newMessage, messagesRef]);
 
     useEffect(() => {
-        if (messagesData.messages[id]) {
-            const gameMessages = messagesData.messages[id];
-            const sortedMessages = Object.values(gameMessages).sort((a, b) => a.timestamp - b.timestamp);
-            setMessages(sortedMessages);
-        }
+        setNewMessage('');
     }, [id]);
 
-    if (loading) {
+    useEffect(() => {
+        const messagesContainer = document.querySelector('.messages-container');
+        if (messagesContainer) {
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+    }, [messages]);
+
+    if (loading || loadingMessages) {
         return <Container>Loading...</Container>;
     }
 
@@ -34,18 +73,30 @@ const MessageBoard = () => {
         );
     }
 
+    if (errorMessages) {
+        return (
+            <Container>
+                <Alert variant="danger">
+                    Error: {errorMessages.message}
+                </Alert>
+            </Container>
+        );
+    }
+
     return (
         <Container>
             <h2>{gamesData.games[id].teams.join(' vs ')}</h2>
-            <ListGroup>
-                {messages.map((msg, index) => (
-                    <ListGroup.Item key={index}>
-                        <strong>{msg.author}</strong>: {msg.text}
-                        <br />
-                        <small>{new Date(msg.timestamp).toLocaleTimeString()}</small>
-                    </ListGroup.Item>
-                ))}
-            </ListGroup>
+            <div className="messages-container">
+                <ListGroup>
+                    {messages.map((msg) => (
+                        <ListGroup.Item key={msg.id}>
+                            <strong>{msg.author}</strong>: {msg.text}
+                            <br />
+                            <small>{new Date(msg.timestamp).toLocaleTimeString()}</small>
+                        </ListGroup.Item>
+                    ))}
+                </ListGroup>
+            </div>
             <Form>
                 <Form.Group className="mb-3">
                     <Form.Control
@@ -56,18 +107,7 @@ const MessageBoard = () => {
                     />
                 </Form.Group>
                 <div className="d-flex justify-content-between">
-                    <Button variant="primary" onClick={() => {
-                        if (!user) {
-                            alert("Please log in to send messages."); 
-                            return;
-                        }
-                        if (!newMessage.trim()) {
-                            alert("Please enter a message before sending.");
-                            return;
-                        }
-                        console.log("Send message:", newMessage); 
-                        setNewMessage(''); 
-                    }}>
+                    <Button variant="primary" onClick={handleSendMessage}>
                         Send
                     </Button>
                     <Link to={`/game/${id}`} className="btn btn-primary">
