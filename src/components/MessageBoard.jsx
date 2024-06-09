@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { Container, Form, Button, ListGroup, Alert } from 'react-bootstrap';
 import { useAuthState } from 'react-firebase-hooks/auth';
@@ -14,17 +14,12 @@ const MessageBoard = () => {
     const messagesRef = ref(database, `messages/${id}`);
     const [messagesSnapshot, loadingMessages, errorMessages] = useList(messagesRef);
 
-    const messages =
-        messagesSnapshot ? 
-            messagesSnapshot
-                .map(snapshot => ({
-                    id: snapshot.key,
-                    ...snapshot.val()
-                }))
-                .sort((a, b) => a.timestamp - b.timestamp)
-                .filter((message, index, self) => 
-                    index === self.findIndex((msg) => msg.id === message.id)
-                ) : [];
+    const messages = useMemo(() => (
+        messagesSnapshot ? messagesSnapshot.map(snapshot => ({
+            id: snapshot.key,
+            ...snapshot.val()
+        })).sort((a, b) => a.timestamp - b.timestamp) : []
+    ), [messagesSnapshot]);
 
     const handleSendMessage = useCallback(async () => {
         if (!user) {
@@ -35,7 +30,6 @@ const MessageBoard = () => {
 
         const messageToSend = newMessage;
         setNewMessage(''); 
-
         try {
             const newMessageRef = push(messagesRef);
             await set(newMessageRef, {
@@ -107,10 +101,10 @@ const MessageBoard = () => {
                     />
                 </Form.Group>
                 <div className="d-flex justify-content-between">
-                    <Button variant="primary" onClick={handleSendMessage}>
+                    <Button variant="primary" onClick={handleSendMessage} className="btn-custom">
                         Send
                     </Button>
-                    <Link to={`/game/${id}`} className="btn btn-primary">
+                    <Link to={`/game/${id}`} className="btn btn-primary btn-custom">
                         Back to Game Details
                     </Link>
                 </div>

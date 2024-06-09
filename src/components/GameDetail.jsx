@@ -26,11 +26,9 @@ const GameDetail = () => {
               loading="lazy"
             ></iframe>
           </div>
-           <Link to="/games">Back to Schedule</Link>
-          <br/>
-          <Link to={`/game/${id}/messages`} className="btn btn-primary mt-3">
-            Participate
-          </Link>
+           <Link to="/games" className="btn btn-primary mt-3">&lt;Back</Link>
+          <Link to={`/game/${id}/messages`} className="btn btn-primary mt-3 ms-2">Participate</Link>
+          <Link to={`/game/${id}/gallery`} className="btn btn-primary mt-3 ms-2">Gallery</Link>
         </Col>
       </Row>
     </Container>

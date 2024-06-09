@@ -32,7 +32,7 @@ const Schedule = () => {
                             onChange={handleSearchChange}
                             value={searchTerm}
                         />
-                        <Button variant="outline-secondary" id="button-addon2">
+                        <Button variant="outline-secondary" id="button-addon2" className="btn-custom">
                             Search
                         </Button>
                     </InputGroup>

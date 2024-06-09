@@ -30,17 +30,19 @@
 
 h2 {
   margin-top: 20px; 
-  color: #333; 
+  color: #1D5057ff; 
 }
 
 .ListGroup {
   margin-bottom: 20px; 
 }
+
 .table td, .table th {
   white-space: nowrap; 
   overflow: hidden; 
   text-overflow: ellipsis; 
 }
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
@@ -94,21 +96,121 @@ h2 {
   color: #5a6268 !important;
   text-decoration: none !important;
 }
+
 .btn-custom {
-    background-color: #f8f9fa;  
-    color: black;             
+    background-color: #68B83B; 
+    color: white;              
     border-radius: 0.25rem;    
-    border: 1px solid #dee2e6; 
+    border: 1px solid #68B83B; 
     transition: background-color 0.3s ease; 
 }
 
 .btn-custom:hover, .btn-custom:focus {
-    background-color: #e2e6ea; 
+    background-color: #68B83B; 
     outline: none;            
     box-shadow: none;         
 }
-.messages-container {
-    max-height: 400px; 
-    overflow-y: auto;
-    margin-bottom: 20px;
+
+.btn-custom:disabled {
+    background-color: #68B83B; 
+    opacity: 0.6;  
+    cursor: not-allowed; 
 }
+
+.messages-container {
+  max-height: 400px; 
+  overflow-y: auto;
+  margin-bottom: 20px;
+}
+
+a.btn-primary {
+  background-color: #68B83Bff; 
+  color: white;
+  border: none;
+}
+
+a.btn-primary:hover {
+  background-color: #5aa233; 
+}
+
+a {
+  color: #1D5057ff; 
+}
+
+a:hover {
+  color: #1a484f; 
+}
+
+.container-fluid, .container {
+  padding: 20px;
+}
+
+.form-control {
+  margin-bottom: 10px;
+  border: 1px solid #dee2e6;
+}
+
+input[type="file"] {
+  color: #1D5057ff;
+}
+
+a {
+  color: #1D5057ff; 
+}
+
+a:hover {
+  color: #033A49ff; 
+}
+
+h2 {
+  margin-top: 20px; 
+  color: #1D5057ff; 
+}
+
+.gallery-container .img-fluid {
+  margin: 10px;
+}
+
+.gallery-container .btn-custom {
+  margin: 10px;
+}
+
+.input-group .form-control,
+.input-group .btn-custom {
+  border-radius: 0.25rem;
+  height: calc(1.5em + .75rem + 2px); 
+}
+
+.input-group .btn-custom {
+  background-color: #68B83Bff; 
+  color: white;
+  border: none;
+}
+
+.input-group .btn-custom:hover,
+.input-group .btn-custom:focus {
+  background-color: #5aa233; 
+  outline: none;
+  box-shadow: none;
+}
+.navbar {
+    background-color: #0F4844ff !important;
+}
+
+.navbar-brand, .nav-link, .btn-custom {
+    color: white !important;
+}
+.navbar-toggler {
+  background-color: #68B83B;
+}
+
+
+
+
+/* CSS HEX 
+kelly-green: #68B83Bff;
+midnight-green: #1D5057ff;
+black: #000000ff;
+brunswick-green: #0F4844ff;
+midnight-green-2: #033A49ff;
+*/

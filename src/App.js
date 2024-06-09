@@ -5,9 +5,10 @@ import Home from './components/Home';
 import Schedule from './components/Schedule';
 import GameDetail from './components/GameDetail';
 import Navigation from './components/Navigation';
-import MessageBoard from './components/MessageBoard'; 
+import MessageBoard from './components/MessageBoard';
+import Gallery from './components/Gallery'; 
 
-const App = () => {
+function App() {
   return (
     <Router>
       <div>
@@ -16,7 +17,8 @@ const App = () => {
           <Route path="/" element={<Home />} />
           <Route path="/games" element={<Schedule />} />
           <Route path="/game/:id" element={<GameDetail />} />
-          <Route path="/game/:id/messages" element={<MessageBoard />} /> 
+          <Route path="/game/:id/messages" element={<MessageBoard />} />
+          <Route path="/game/:id/gallery" element={<Gallery />} /> 
         </Routes>
       </div>
     </Router>
