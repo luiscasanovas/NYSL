@@ -3,7 +3,6 @@ import { NavLink } from 'react-router-dom';
 import { Navbar, Nav, Container, Button } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../App.css';
-import logo from '../nysl_logo.png';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth, signInWithGoogle, signOutUser } from '../firebase';
 
@@ -29,7 +28,7 @@ const Navigation = () => {
 
                 <Navbar.Brand className="ms-auto" as={NavLink} to="/">
                     <img
-                        src={logo}
+                        src="/nysl_logo.png"
                         height="50"
                         className="d-inline-block align-top"
                         alt="NYSL Logo"

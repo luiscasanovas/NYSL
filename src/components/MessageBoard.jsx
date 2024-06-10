@@ -101,12 +101,13 @@ const MessageBoard = () => {
                     />
                 </Form.Group>
                 <div className="d-flex justify-content-between">
+                    <Link to={`/game/${id}`} className="btn btn-primary btn-custom">
+                        &lt;Back
+                    </Link>
+                    
                     <Button variant="primary" onClick={handleSendMessage} className="btn-custom">
                         Send
                     </Button>
-                    <Link to={`/game/${id}`} className="btn btn-primary btn-custom">
-                        Back to Game Details
-                    </Link>
                 </div>
             </Form>
         </Container>
