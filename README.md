@@ -9,6 +9,7 @@ Photo Gallery: Upload and view photos related to each game.
 Authentication: Users can sign in with Google to access message boards and photo galleries.
 
 Installation
+
 Clone the repository:
 git clone https://github.com/luiscasanovas/NYSL.git
 cd NYSL
