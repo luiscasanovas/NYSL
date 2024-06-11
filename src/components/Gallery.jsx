@@ -3,7 +3,6 @@ import { useParams, Link } from 'react-router-dom';
 import { Container, Form, Button, Alert, Row, Col } from 'react-bootstrap';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { ref, uploadBytes, getDownloadURL, listAll } from 'firebase/storage';
-import { useList } from 'react-firebase-hooks/database';
 import { auth, database, storage, set, ref as dbRef } from '../firebase';
 import gamesData from '../gamesData.json';
 import '../App.css';
@@ -72,6 +71,9 @@ const Gallery = () => {
                 <Alert variant="info">
                     Please <strong>Sign in</strong> to view and participate in the gallery.
                 </Alert>
+                <Link to="/games">
+                    <Button className="btn-custom mt-3">&lt;Back</Button>
+                </Link>
             </Container>
         );
     }
@@ -87,7 +89,7 @@ const Gallery = () => {
                     <Button onClick={handleUpload} disabled={!newPicture} className="btn-custom">
                         Upload
                     </Button>
-                    <Link to={`/game/${id}`} className="btn btn-primary">
+                    <Link to={`/game/${id}`} className="btn btn-primary btn-custom">
                         &lt;Back
                     </Link>
                 </div>

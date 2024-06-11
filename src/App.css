@@ -204,9 +204,19 @@ h2 {
   background-color: #68B83B;
 }
 
+footer {
+  background-color: #0F4844ff;
+}
 
+footer h2,
+footer p,
+footer a {
+  color: white;
+}
+.container {
+    padding-top: 0; 
 
-
+}
 /* CSS HEX 
 kelly-green: #68B83Bff;
 midnight-green: #1D5057ff;

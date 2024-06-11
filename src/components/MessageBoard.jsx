@@ -14,12 +14,21 @@ const MessageBoard = () => {
     const messagesRef = ref(database, `messages/${id}`);
     const [messagesSnapshot, loadingMessages, errorMessages] = useList(messagesRef);
 
-    const messages = useMemo(() => (
-        messagesSnapshot ? messagesSnapshot.map(snapshot => ({
-            id: snapshot.key,
-            ...snapshot.val()
-        })).sort((a, b) => a.timestamp - b.timestamp) : []
-    ), [messagesSnapshot]);
+    const messages = useMemo(() => {
+        const messagesMap = new Map();
+        if (messagesSnapshot) {
+            messagesSnapshot.forEach(snapshot => {
+                const message = {
+                    id: snapshot.key,
+                    ...snapshot.val()
+                };
+                if (!messagesMap.has(message.id)) {
+                    messagesMap.set(message.id, message);
+                }
+            });
+        }
+        return Array.from(messagesMap.values()).sort((a, b) => a.timestamp - b.timestamp);
+    }, [messagesSnapshot]);
 
     const handleSendMessage = useCallback(async () => {
         if (!user) {
